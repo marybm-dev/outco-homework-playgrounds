@@ -45,7 +45,7 @@ func insertionSort(arr: inout [Int]) {
 
 var arrayToInsertionSort =  [3,9,1,4,7]
 insertionSort(arr: &arrayToInsertionSort)
-print(arrayToInsertionSort)
+//print(arrayToInsertionSort)
 
 
 
@@ -135,6 +135,140 @@ func bubbleSort(arr: inout [Int]) {
 var arrayToBubbleSort = [3,9,1,4,7]
 bubbleSort(arr: &arrayToBubbleSort)
 //print(arrayToBubbleSort)
+
+
+
+/*
+ *  Homework V
+ *
+ *  Problem 1: Node class
+ *
+ *  Prompt:    Create a Node class
+ *             The Node class should contain the following properties:
+ *
+ *                   value:   integer value (default null)
+ *               leftChild:   pointer to another node (initially null)
+ *              rightChild:   pointer to another node (initially null)
+ *
+ *                 Example:   var sample = new Node(1)
+ *                            sample.value        // 1
+ *                            sample.leftChild    // null
+ *                            sample.rightChild   // null
+ */
+
+class Node {
+    var value: Int? = nil
+    var left: Node? = nil
+    var right: Node? = nil
+    
+    convenience init(_ value: Int) {
+        self.init()
+        self.value = value
+    }
+}
+
+ /*  Problem 2: BinarySearchTree class.
+ *
+ *  Prompt:    Create a BinarySearchTree class
+ *
+ *             The BinarySearchTree class should contain the following
+ *             properties:
+ *
+ *                    root:   A pointer to the root node (initially null)
+ *                    size:   The number of nodes in the BinarySearchTree
+ *
+ *             The BinarySearchTree class should also contain the following
+ *             methods:
+ *
+ *                  insert:   A method that takes takes an integer value, and
+ *                            creates a node with the given input.  The method
+ *                            will then find the correct place to add the new
+ *                            node. Values larger than the current node node go
+ *                            to the right, and smaller values go to the left.
+ *
+ *                            Input:     value
+ *                            Output:    undefined
+ *
+ *                  search:   A method that will search to see if a node with a
+ *                            specified value exists and returns true or false
+ *                            if found.
+ *
+ *                            Input:     value
+ *                            Output:    boolean
+ *
+ *
+ *             What are the time and auxilliary space complexities of the
+ *             various methods?
+ *
+ *
+ *  Extra:     Remove method for BinarySearchTree class
+ *
+ *  Prompt:    Add the following method to the BinarySearchTree class:
+ *
+ *                  remove:   A method that removes a value matching the input
+ *                            the tree is then retied so that the binary search
+ *                            tree order is not violated.
+ *
+ */
+
+
+class BinarySearchTree {
+    var root: Node? = nil
+    var size: Int = 0
+    
+    func insert(_ value: Int) {
+        let newNode = Node(value)
+        guard self.root != nil else {
+            self.root = newNode
+            return
+        }
+
+        var current: Node? = root
+        func recursiveInsert(_ node: Node) {
+            if value < (node.value)! {
+                if node.left != nil {
+                    recursiveInsert(node.left!)
+                }
+                else {
+                    node.left = newNode
+                    return
+                }
+            } else {
+                if node.right != nil {
+                    recursiveInsert(node.right!)
+                }
+                else {
+                    node.right = newNode
+                    return
+                }
+            }
+        }
+        recursiveInsert(current!)
+    }
+
+}
+
+
+var myTree = BinarySearchTree()
+myTree.insert(5)
+assert(myTree.root?.value == 5)
+myTree.insert(3)
+myTree.root?.left?.value == 3
+assert(myTree.root?.left?.value == 3)
+myTree.insert(2)
+assert(myTree.root?.left?.left?.value == 2)
+myTree.insert(4)
+assert(myTree.root?.left?.right?.value == 4)
+
+
+
+
+
+
+
+
+
+
 
 
 
