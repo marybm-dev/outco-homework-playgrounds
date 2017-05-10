@@ -156,16 +156,6 @@ bubbleSort(arr: &arrayToBubbleSort)
  *                            sample.rightChild   // null
  */
 
-class Node {
-    var value: Int? = nil
-    var left: Node? = nil
-    var right: Node? = nil
-    
-    convenience init(_ value: Int) {
-        self.init()
-        self.value = value
-    }
-}
 
  /*  Problem 2: BinarySearchTree class.
  *
@@ -212,6 +202,17 @@ class Node {
  */
 
 
+class Node {
+    var value: Int? = nil
+    var left: Node? = nil
+    var right: Node? = nil
+    
+    convenience init(_ value: Int) {
+        self.init()
+        self.value = value
+    }
+}
+
 class BinarySearchTree {
     var root: Node? = nil
     var size: Int = 0
@@ -220,9 +221,10 @@ class BinarySearchTree {
         let newNode = Node(value)
         guard self.root != nil else {
             self.root = newNode
+            self.size += 1
             return
         }
-
+        
         var current: Node? = root
         func recursiveInsert(_ node: Node) {
             if value < (node.value)! {
@@ -231,6 +233,7 @@ class BinarySearchTree {
                 }
                 else {
                     node.left = newNode
+                    self.size += 1
                     return
                 }
             } else {
@@ -239,6 +242,7 @@ class BinarySearchTree {
                 }
                 else {
                     node.right = newNode
+                    self.size += 1
                     return
                 }
             }
@@ -289,9 +293,130 @@ assert(myTree.search(7) == false)
 
 
 
+/*
+ 
+ TARGET PRACTICE
+ 
+ */
+
+/*
+ *  1. Write a function that takes in an array of integers and performs the insert method on each
+ *     item of the array in order.
+ *
+ *  Input: Array
+ *  Output: Binary Search Tree
+ *
+ *  Example: [4, 2, 5, 1, 3, 7, 6, 8]
+ *  Output this binary search tree:
+ *
+ *              4
+ *            /   \
+ *          2       5
+ *        /   \       \
+ *      1       3       7
+ *                    /   \
+ *                  6      8
+ */
+
+let array = [4, 2, 5, 1, 3, 7, 6, 8]
+var myBinaryTree = BinarySearchTree()
+
+for element in array {
+    myBinaryTree.insert(element)
+}
+
+print(myBinaryTree.size)
 
 
 
+/*
+ *  2. Given the example output binary search tree from Problem 1, what would the order of values
+ *     printed be if we used:
+ *
+ *     a. BREADTH FIRST traversal
+ 4, 2, 5, 1, 3, 7, 6, 8
+ *
+ *     b. PRE-ORDER DEPTH first traversal
+ 
+ 4, 2, 5, 1, 3, 7, 6, 8
+ *
+ *     c. IN-ORDER DEPTH first traversal
+ 
+ 1, 2, 3, 4, 5, 6, 7, 8
+ *
+ *     d. POST-ORDER DEPTH first traversal
+ 
+ 1, 3, 2, 6, 8, 7, 5, 4
+ */
+
+
+
+
+/*
+ *  3a. Using a queue, and while loop write a function that takes in a binary search tree and
+ *      outputs an array of values ordered by BREADTH FIRST traversal.
+ *
+ *  Input: Binary Search Tree
+ *  Output: Array
+ *
+ *  NOTE: You may use an array or linked list for your queue.
+ *
+ *  NOTE: Confirm with your answer from problem 2a.
+ */
+
+func bfs(tree: BinarySearchTree) -> [Int] {
+    var result = [Int]()
+    var queue = [Node]()
+    queue.append(tree.root!)
+    
+    while queue.count > 0 {
+        let current = queue.remove(at: 0)
+        if current.left != nil {
+            queue.append(current.left!)
+        }
+        if current.right != nil {
+            queue.append(current.right!)
+        }
+        result.append(current.value!)
+    }
+    
+    return result
+}
+
+print(bfs(tree: myBinaryTree))
+
+
+/*
+ *  3b. Using recursion, write a function that takes in a binary search tree and
+ *      outputs an array of values ordered by PRE-ORDER DEPTH FIRST traversal.
+ *
+ *      Input: Binary Search Tree
+ *      Output: Array
+ *
+ *      NOTE: Confirm with your answer from problem 2b.
+ */
+
+
+/*
+ *  3c. Using recursion, write a function that takes in a binary search tree and
+ *      outputs an array of values ordered by IN-ORDER DEPTH FIRST traversal.
+ *
+ *      Input: Binary Search Tree
+ *      Output: Array
+ *
+ *      NOTE: Confirm with your answer from problem 2c.
+ */
+
+
+/*
+ *  3d. Using recursion, write a function that takes in a binary search tree and
+ *      outputs an array of values ordered by POST-ORDER DEPTH FIRST traversal.
+ *
+ *      Input: Binary Search Tree
+ *      Output: Array
+ *
+ *      NOTE: Confirm with your answer from problem 2d.
+ */
 
 
 
