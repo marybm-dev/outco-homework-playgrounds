@@ -245,7 +245,29 @@ class BinarySearchTree {
         }
         recursiveInsert(current!)
     }
-
+    
+    func search(_ value: Int) -> Bool {
+        var current: Node? = root
+        func recursiveFind(_ node: Node?) -> Bool {
+            guard node != nil else {
+                return false
+            }
+            
+            if (node?.value)! == value {
+                return true
+            }
+            else if value < (node?.value)! {
+                return recursiveFind(node?.left)
+            }
+            else if value > (node?.value)! {
+                return recursiveFind(node?.right)
+            }
+            
+            return false
+        }
+        
+        return recursiveFind(current)
+    }
 }
 
 
@@ -261,7 +283,8 @@ myTree.insert(4)
 assert(myTree.root?.left?.right?.value == 4)
 
 
-
+assert(myTree.search(2) == true)
+assert(myTree.search(7) == false)
 
 
 
