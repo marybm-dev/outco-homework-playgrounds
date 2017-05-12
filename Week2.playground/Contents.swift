@@ -325,7 +325,7 @@ for element in array {
     myBinaryTree.insert(element)
 }
 
-print(myBinaryTree.size)
+//print(myBinaryTree.size)
 
 
 
@@ -383,7 +383,7 @@ func bfs(tree: BinarySearchTree) -> [Int] {
     return result
 }
 
-print(bfs(tree: myBinaryTree))
+//print(bfs(tree: myBinaryTree))
 
 
 /*
@@ -421,8 +421,113 @@ print(bfs(tree: myBinaryTree))
 
 
 
+/*
+ *  Homework VI
+ *
+ *  Problem 1: Quicksort
+ *
+ *  Prompt:    Given an unsorted array of integers, return the array
+ *             sorted using quicksort.
+ *
+ *             What are the time and auxilliary space complexity?
+ *
+ *  Input:     An unsorted array of integers
+ *  Output:    A sorted array of integers
+ *
+ *  Example:   input = [3,9,1,4,7] , output = [1,3,4,7,9]
+ */
+
+// time:  O(nlog(n))
+// space: O(1)
+
+//func sort(subarray: inout [Int]) {
+//    if subarray.count == 1 {
+//        return
+//    }
+//    
+//    let pivot = subarray[0]
+//    var left = 1
+//    print("pivot: \(pivot)   array: \(subarray)")
+//    var right = subarray.count - 1
+//    
+//    while left <= right {
+//        while subarray[left] < pivot && left < subarray.count - 1 {
+//            left += 1
+//        }
+//        while subarray[right] > pivot && right > 0 {
+//            right -= 1
+//        }
+//        print("-- while : right \(right)")
+//        let temp = subarray[left]
+//        subarray[left] = subarray[right]
+//        subarray[right] = temp
+//    }
+//    
+//    // smaller section
+//    var subA = Array(subarray[1..<left])
+//    
+//    // larger section
+//    var subB = Array(subarray[left..<subarray.count])
+//    
+//    //sort(subarray: &subA)
+//    sort(subarray: &subB)
+//}
+
+func quicksort(arr: inout [Int]) {
+
+    func partition(start: Int, pivot: Int) -> Int {
+        var sorted = start
+        
+        // compare elements with the pivot
+        for i in sorted..<pivot {
+            if arr[i] <= arr[pivot] {
+                if sorted != i {
+                    swap(&arr[i], &arr[sorted])
+                }
+                
+                sorted += 1
+            }
+        }
+        
+        // move pivot to final position
+        if sorted != pivot {
+            swap(&arr[sorted], &arr[pivot])
+        }
+        
+        return sorted
+    }
+    
+    func sort(startIndex: Int, pivot: Int) {
+        if startIndex < pivot {
+            let pivotIndex = partition(start: startIndex, pivot: pivot)
+            sort(startIndex: startIndex, pivot: pivotIndex - 1)
+            sort(startIndex: pivotIndex + 1, pivot: pivotIndex)
+        }
+    }
+    
+    sort(startIndex: 0, pivot: arr.count - 1)
+}
+
+var arrayToQuicksort = [3,9,1,4,7]
+quicksort(arr: &arrayToQuicksort)
+print(arrayToQuicksort)
 
 
+/*
+ *  Problem 2: Mergesort
+ *
+ *  Prompt:    Given an unsorted array of integers, return the array
+ *             sorted using mergesort.
+ *
+ *             What are the time and auxilliary space complexity?
+ *
+ *  Input:     An unsorted array of integers
+ *  Output:    A sorted array of integers
+ *
+ *  Example:   input = [3,9,1,4,7] , output = [1,3,4,7,9]
+ *
+ */
 
+Array(repeating: [String?](), count: 26)
 
 
