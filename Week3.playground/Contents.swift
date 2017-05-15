@@ -50,35 +50,106 @@
  */
 
 class Vertex {
+    var value: Int
+    var edges: [Int: Vertex]
     
+    init(value: Int) {
+        self.value = value
+        self.edges = [:]
+    }
 }
 
 class Graph {
     
+    var vertices: [Int: Vertex] = [:]
+    var totalVertices: Int = 0
+    var totalEdges: Int = 0
+    
     func addVertex(id: Int) {
+        // check if the vertex already exists
+        guard vertices[id] == nil else {
+            return
+        }
         
+        // create the vertex since it doesn't exist
+        let vertex = Vertex(value: id)
+        vertices[id] = vertex
+        totalVertices += 1
     }
     
     func getVertex(id: Int) -> Vertex? {
-        return nil
+        return vertices[id]
     }
     
     func addEdge(id1: Int, id2: Int) {
+        guard vertices[id1] != nil,
+            vertices[id2] != nil else {
+                return
+        }
         
+        let vertex1 = vertices[id1]!
+        let vertex2 = vertices[id2]!
+        
+        vertex1.edges[vertex2.value] = vertex2
+        vertex1.edges[vertex1.value] = vertex1
+        totalEdges += 2
     }
     
     func removeEdge(id1: Int, id2: Int) {
+        guard vertices[id1] != nil,
+            vertices[id2] != nil else {
+                return
+        }
         
+        let vertex1 = vertices[id1]!
+        let vertex2 = vertices[id2]!
+        
+        vertex1.edges[vertex2.value] = nil
+        vertex1.edges[vertex1.value] = nil
+        totalEdges -= 2
     }
     
     func removeVertex(id: Int) {
+        guard vertices[id] != nil else {
+            return
+        }
         
+        // remove the vertex
+        vertices[id] = nil
+        
+        // remove any edges to/from this vertex
+        for v in vertices {
+            let vertex = v.value
+            if vertex.edges[id] != nil {
+                vertex.edges[id] = nil
+                totalEdges -= 1
+            }
+        }
+        
+        // decrement the vertex count
+        totalVertices -= 1
     }
     
     func findNeighbors(id: Int) -> [Int: Vertex] {
-        return [:]
+        guard vertices[id] != nil else {
+            return [:]
+        }
+        
+        let vertex = vertices[id]!
+        return vertex.edges
     }
 }
+
+var work = Vertex(value: 5)
+assert(work.value == 5)
+
+var work1 = Vertex(value: 5)
+var work2 = Vertex(value: 10)
+work1.edges[work2.value] = work2
+work2.edges[work1.value] = work1
+assert(work1.edges[work2.value]?.value == 10 && work2.edges[work1.value]?.value == 5)
+
+
 
 
 
