@@ -372,17 +372,6 @@ class HashTable {
  */
 
 
-/*
- 
- can only travel right or down
- 
- right down
- down right
- 
- 
- 
- */
-
 func latticePaths(size: Int) -> Int {
 
     func walkPath(_ x: Int, _ y: Int) -> Int {
