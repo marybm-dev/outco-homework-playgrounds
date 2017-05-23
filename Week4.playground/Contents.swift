@@ -3,24 +3,24 @@
 import UIKit
 import Foundation
 
-func latticePaths(size: Int) -> Int {
-    
-    func walkPath(_ x: Int, _ y: Int) -> Int {
-        var routes = 0
-        
-        if x == 0 || y == 0 {
-            routes = 1
-        } else {
-            routes = walkPath(x-1, y) + walkPath(x, y-1)
-        }
-        
-        return routes
-    }
-    
-    return walkPath(size, size)
-}
-
-latticePaths(size: 2)
+//func latticePaths(size: Int) -> Int {
+//    
+//    func walkPath(_ x: Int, _ y: Int) -> Int {
+//        var routes = 0
+//        
+//        if x == 0 || y == 0 {
+//            routes = 1
+//        } else {
+//            routes = walkPath(x-1, y) + walkPath(x, y-1)
+//        }
+//        
+//        return routes
+//    }
+//    
+//    return walkPath(size, size)
+//}
+//
+//latticePaths(size: 2)
 
 
 /*
@@ -61,8 +61,6 @@ print(maxConsecutiveSums(list: nums))
 
 
 
-
-
  /*
  *  Problem 2: Lattice Paths (Dynamic Programming Approach)
  *
@@ -95,3 +93,41 @@ print(maxConsecutiveSums(list: nums))
  *    2: https://en.wikipedia.org/wiki/Lattice_path
  *
  */
+
+
+func latticePaths(_ size: Int) -> Int {
+    var memo = Array(repeating: Array(repeating: 1, count: size), count: size)
+    memo[0][0] = 1
+    
+    guard size > 1 else {
+        return memo[0][0] + 1
+    }
+    
+    for i in 1..<size {
+        for j in 1..<size {
+            memo[i][j] = memo[i-1][j] + memo[i][j-1] + 1
+        }
+    }
+    
+    print(memo)
+    return memo[size-1][size-1]
+}
+
+print(latticePaths(2))
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
