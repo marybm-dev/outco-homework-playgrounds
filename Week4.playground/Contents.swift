@@ -167,7 +167,7 @@ func insertionSort(input: inout [Double]) {
  
  */
 
-// time:  O(n^2)
+// time:  O(n+k) for best and avg. O(n^2) in worst case
 // space: O(n)
 
 func bucketSort(arr: inout [Double]) {
@@ -230,15 +230,16 @@ print(input)
  *
  */
 
+// time:  O(n)
+// space: O(n)
 func kthSmallest(arr: [Int], k: Int) -> Int {
-    var smallest = arr[0]
-    
-    
-    
-    return smallest
+    var intsAsDouble = arr.map { Double($0) }
+    bucketSort(arr: &intsAsDouble)
+    return Int(intsAsDouble[k-1])
 }
 
-
+var array = [1984, 1337, 9000, 8304, 5150, 9000, 8304]
+kthSmallest(arr: array, k: 5)
 
 
 
