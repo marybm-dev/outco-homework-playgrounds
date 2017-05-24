@@ -117,9 +117,106 @@ print(latticePaths(2))
 
 
 
+func insertionSort(input: inout [Double]) {
+    for i in 1..<input.count {
+        let current = input[i]
+        var index = i
+        
+        while index > 0 && input[index-1] > current {
+            input[index] = input[index-1]
+            index -= 1
+        }
+        input[index] = current
+    }
+}
+
+/*
+ *  Homework XI
+ *
+ *  Problem 1: Bucket Sort
+ *
+ *  Prompt:    Given an unsorted array of numbers which are in the range
+ *             of 0.0 to 1.0, and are uniformly distributed across the
+ *             range, sort the numbers efficiently.
+ *
+ *  Input:     Unsorted array of numbers in range of 0.0 to 1.0
+ *  Output:    A sorted array
+ *
+ *  Example:   input = [0.897, 0.565, 0.656, 0.1234, 0.665, 0.3434]
+ *             output = [0.1234, 0.3434, 0.565, 0.656, 0.665, 0.897]
+ *
+ *  Notes:     What are the time and auxilliary space complexity?
+ */
+
+// time:  O(n^2)
+// space: O(n)
+func bucketSort(arr: inout [Double]) {
+    var result = [Double]()
+    
+    var buckets = Array(repeating: [Double](), count: 4)
+    // 0: 0.00...0.25
+    // 1: 0.26...0.50
+    // 2: 0.51...0.75
+    // 3: 0.76...1.00
+    for element in arr {
+        if element > 0.0 && element <= 0.25 {
+            buckets[0].append(element)
+            insertionSort(input: &buckets[0])
+        }
+        else if element > 0.26 && element <= 0.50 {
+            buckets[1].append(element)
+            insertionSort(input: &buckets[1])
+        }
+        else if element > 0.51 && element <= 0.75 {
+            buckets[2].append(element)
+            insertionSort(input: &buckets[2])
+        }
+        else if element > 0.76 {
+            buckets[3].append(element)
+            insertionSort(input: &buckets[3])
+        }
+    }
+    
+    var index = 0
+    for i in 0..<buckets.count {
+        for j in 0..<buckets[i].count {
+            arr[index] = buckets[i][j]
+            index += 1
+        }
+    }
+}
+
+var input = [0.897, 0.565, 0.656, 0.1234, 0.665, 0.3434]
+bucketSort(arr: &input)
+print(input)
 
 
+ /*
+ *  Problem 2: Kth Smallest Element in a Range
+ *
+ *  Prompt:    Given an unsorted array of whole integers in the range
+ *             1000 to 9000, find the Kth smallest element in linear time
+ *             The array can have duplicates.
+ *
+ *  Input:     Unsorted array of whole integers in range of 1000 to 9000
+ *             Kth smallest element you want to find
+ *
+ *  Output:    Kth smalest element in the range
+ *
+ *  Example:   array = [1984, 1337, 9000, 8304, 5150, 9000, 8304], k=5
+ *             output = 8304
+ *
+ *  Notes:     What are the time and auxilliary space complexity?
+ *
+ */
 
+func kthSmallest(arr: [Int], k: Int) -> Int {
+    var smallest = arr[0]
+    
+    
+    
+    return smallest
+}
 
 
 
