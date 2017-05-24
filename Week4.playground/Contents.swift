@@ -146,10 +146,30 @@ func insertionSort(input: inout [Double]) {
  *             output = [0.1234, 0.3434, 0.565, 0.656, 0.665, 0.897]
  *
  *  Notes:     What are the time and auxilliary space complexity?
+ 
+ 
+ 
+ loop through elements
+ each bucket contains 1..n
+ keep bucket sorted (can use sorting method used before i. bst  or   ii. insertion sort)
+
+ loop through each bucket and gather back into original array
+ 
+ 
+ 
+ define bucket size of range from 1-20, 4 buckets holding values
+ loop through array and add items into proper bucket
+ when multiple items make sure we insert into proper order
+ 
+ next work to get values into sorted order
+ loop thru bucket, one by one place into sorted array
+ can replace items in our imput array
+ 
  */
 
 // time:  O(n^2)
 // space: O(n)
+
 func bucketSort(arr: inout [Double]) {
     var result = [Double]()
     
