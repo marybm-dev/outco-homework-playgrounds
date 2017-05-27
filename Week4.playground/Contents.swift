@@ -249,3 +249,194 @@ kthSmallest(arr: array, k: 5)
 
 
 
+
+
+
+/*
+ *                                 Homework XII
+ *
+ *  Problem: Heap
+ *
+ *  Prompt: Create a Heap class/constructor
+ *
+ *  The Heap will take in the following input:
+ *
+ *                type: argument should be either 'min' or 'max'. This will
+ *                      dictate whether the heap will be a minheap or maxheap.
+ *                      The comparator method will be affected by this
+ *                      argument. See method description below
+ *
+ *  The Heap will have the following property:
+ *
+ *             storage: array
+ *
+ *                type: property that will be either 'min' or 'max'. This will
+ *                      be dictated by
+ *
+ *  The Heap will have the following methods:
+ *
+ *             compare: takes in two arguments (a and b). Depending on the heap
+ *                      type (minheap or maxheap), the comparator will behave
+ *                      differently. If the heap is a minheap, then the compare
+ *                      function will return true if a is less than b, false
+ *                      otherwise. If the heap is a maxheap, then the compare
+ *                      function will return true if a is greater than b, false
+ *                      otherwise.
+ *
+ *                swap: takes in two indexes and swaps the elements at the two
+ *                      indexes in the storage array
+ *
+ *                peak: returns the peak element of the storage array. This
+ *                      will be the most minimum and maximum element for a
+ *                      minheap and maxheap respectively
+ *
+ *                size: returns the number of elements in the heap
+ *
+ *              insert: inserts a value into the heap. Should begin by pushing
+ *                      the value onto the end of the array, and then calling
+ *                      the bubbleUp method from the last index of the array
+ *
+ *            bubbleUp: takes in an index, and considers the element at that
+ *                      index to be a child. Continues to swap that child with
+ *                      its parent value if the heap comparator condition is
+ *                      not fulfilled
+ *
+ *          removePeak: removes the peak element from the heap and returns it.
+ *                      Should begin by swapping the 0th-index element with the
+ *                      last element in the storage array. Uses bubbleDown
+ *                      method from the 0th index
+ *
+ *          bubbleDown: takes in an index, and considers the element at this
+ *                      index to be the parent. Continues to swap this parent
+ *                      element with its children if the heap comparator
+ *                      condition is not fulfilled
+ *
+ *              remove: takes in a value and (if it exists in the heap),
+ *                      removes that value from the heap data structure and
+ *                      returns it. Should rearrange the rest of the heap to
+ *                      ensure the heap comparator conditions are fulfilled
+ *                      for all of its elements
+ *
+ *
+ *
+ *  Input:  N/A
+ *  Output: A Heap instance
+ *
+ *  What are the time and auxilliary space complexities of the various methods?
+ *
+ */
+
+
+
+class Minheap {
+    var storage = [Int]()
+    
+    init() {
+        
+    }
+    
+    func swap(_ index1: Int, _ index2: Int) {
+        (storage[index1], storage[index2]) = (storage[index2], storage[index1])
+    }
+    
+    func peak() -> Int {
+        return self.storage[0]
+    }
+    
+    func size() -> Int {
+        return self.storage.count
+    }
+    
+    func insert(_ value: Int) {
+        var size = self.size() - 1
+        self.storage.append(value)
+        self.bubbleUp(&size)
+    }
+    
+    func bubbleUp(_ childIndex: inout Int) {
+        var parentIndex = self.getParentIndex(childIndex)
+        
+        while childIndex > 0 && self.storage[parentIndex] > self.storage[childIndex] {
+            self.swap(childIndex, parentIndex)
+            
+            childIndex = parentIndex
+            parentIndex = self.getParentIndex(childIndex)
+        }
+    }
+    
+    func getParentIndex(_ childIndex: Int) -> Int {
+        if childIndex % 2 == 0 {
+            return (childIndex - 2) / 2
+        } else {
+            return (childIndex - 1) / 2
+        }
+    }
+    
+    func removePeak() -> Int {
+        var start = 0
+        self.swap(start, self.size() - 1)
+        let removedElement = self.storage.remove(at: self.size() - 1)
+        self.bubbleDown(&start)
+        return removedElement
+    }
+    
+    func bubbleDown(_ parentIndex: inout Int) {
+        var childIndex = self.getChildIndex(parentIndex)
+        
+        while parentIndex < self.size() - 1 && self.storage[parentIndex] > self.storage[childIndex] {
+            self.swap(parentIndex, childIndex)
+            
+            parentIndex = childIndex
+            childIndex = self.getChildIndex(parentIndex)
+        }
+    }
+    
+    func getChildIndex(_ parentIndex: Int) -> Int {
+        let childIndex1 = 2 * parentIndex + 1
+        let childIndex2 = 2 * parentIndex + 2
+        
+        // choose the index of the smaller element
+        
+        if childIndex1 >= self.size() {
+            return childIndex1
+        }
+            
+        else if childIndex2 >= self.size() {
+            return childIndex1
+        }
+            
+        else if self.storage[childIndex1] < self.storage[childIndex2] {
+            return childIndex1
+        }
+            
+        else {
+            return childIndex2
+        }
+    }
+}
+
+
+
+var test = Minheap()
+test.insert(10)
+test.insert(5)
+test.insert(7)
+test.insert(8)
+test.insert(1)
+test.insert(3)
+test.insert(6)
+print(test.storage)
+print(test.removePeak())
+print(test.storage)
+print(test.removePeak())
+print(test.storage)
+print(test.removePeak())
+print(test.storage)
+
+
+
+
+
+
+
+
